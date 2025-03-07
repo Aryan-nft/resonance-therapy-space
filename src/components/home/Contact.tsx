@@ -1,11 +1,11 @@
-
 import { useState } from 'react';
 import AnimatedSection from '../ui/AnimatedSection';
 import { Phone, Mail, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-
 const Contact = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,26 +13,27 @@ const Contact = () => {
     service: '',
     message: ''
   });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    const {
+      name,
+      value
+    } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    
+
     // Show success toast
     toast({
       title: "Message sent!",
       description: "We'll get back to you as soon as possible.",
-      variant: "default",
+      variant: "default"
     });
-    
+
     // Reset form
     setFormData({
       name: '',
@@ -42,9 +43,7 @@ const Contact = () => {
       message: ''
     });
   };
-
-  return (
-    <section id="contact" className="py-20">
+  return <section id="contact" className="py-[38px]">
       <div className="section-container">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16">
           <span className="badge badge-primary mb-4">Contact Us</span>
@@ -66,56 +65,25 @@ const Contact = () => {
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Your Name
                   </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-resonance-300 focus:border-resonance-300 transition-colors"
-                    required
-                  />
+                  <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-resonance-300 focus:border-resonance-300 transition-colors" required />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     Email Address
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-resonance-300 focus:border-resonance-300 transition-colors"
-                    required
-                  />
+                  <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-resonance-300 focus:border-resonance-300 transition-colors" required />
                 </div>
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                     Phone Number
                   </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-resonance-300 focus:border-resonance-300 transition-colors"
-                    required
-                  />
+                  <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-resonance-300 focus:border-resonance-300 transition-colors" required />
                 </div>
                 <div>
                   <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-1">
                     Service Interested In
                   </label>
-                  <select
-                    id="service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-resonance-300 focus:border-resonance-300 transition-colors"
-                    required
-                  >
+                  <select id="service" name="service" value={formData.service} onChange={handleChange} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-resonance-300 focus:border-resonance-300 transition-colors" required>
                     <option value="">Select a service</option>
                     <option value="autism">Autism Therapy</option>
                     <option value="adhd">ADHD Management</option>
@@ -131,21 +99,10 @@ const Contact = () => {
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                   Your Message
                 </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-resonance-300 focus:border-resonance-300 transition-colors"
-                  required
-                ></textarea>
+                <textarea id="message" name="message" value={formData.message} onChange={handleChange} rows={4} className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-resonance-300 focus:border-resonance-300 transition-colors" required></textarea>
               </div>
               <div>
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-resonance-600 text-white font-medium rounded-lg hover:bg-resonance-700 transition-colors"
-                >
+                <button type="submit" className="px-6 py-3 bg-resonance-600 text-white font-medium rounded-lg hover:bg-resonance-700 transition-colors">
                   Send Message
                 </button>
               </div>
@@ -191,18 +148,13 @@ const Contact = () => {
               <p className="text-gray-700 mb-6">
                 Not sure which therapy is right for you or your child? Book a free 15-minute consultation with our experts.
               </p>
-              <a 
-                href="#" 
-                className="inline-block w-full px-6 py-3 bg-resonance-600 text-white font-medium rounded-lg text-center hover:bg-resonance-700 transition-colors"
-              >
+              <a href="#" className="inline-block w-full px-6 py-3 bg-resonance-600 text-white font-medium rounded-lg text-center hover:bg-resonance-700 transition-colors">
                 Schedule Now
               </a>
             </div>
           </AnimatedSection>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Contact;

@@ -1,8 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import AnimatedSection from '../ui/AnimatedSection';
 import { cn } from '@/lib/utils';
-
 const conditions = [{
   id: 'autism',
   title: 'Autism',
@@ -46,7 +44,6 @@ const conditions = [{
   symptoms: ['Repetition of Sounds or Words', 'Prolongation of Sounds', 'Blocks in Speech', 'Facial Tension or Strain', 'Avoidance of Words or Sounds', 'Unusual Speech Rhythm', 'Frustration During Speech'],
   therapies: ['Speech Therapy', 'Special Education', 'Other Therapies if Needed']
 }];
-
 const Conditions = () => {
   const [activeTab, setActiveTab] = useState('autism');
   const [activeSection, setActiveSection] = useState('description');
@@ -55,7 +52,9 @@ const Conditions = () => {
   // Listen for custom event to activate specific condition tab
   useEffect(() => {
     const handleActivateCondition = (event: CustomEvent) => {
-      const { conditionId } = event.detail;
+      const {
+        conditionId
+      } = event.detail;
       if (conditionId && conditions.some(condition => condition.id === conditionId)) {
         setActiveTab(conditionId);
         setActiveSection('description');
@@ -80,8 +79,7 @@ const Conditions = () => {
       document.removeEventListener('activateCondition', handleActivateCondition as EventListener);
     };
   }, []);
-
-  return <section id="conditions" className="py-20 bg-resonance-50">
+  return <section id="conditions" className="bg-resonance-50 py-[41px]">
       <div className="section-container">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16">
           <span className="badge badge-secondary mb-4">Conditions We Treat</span>
@@ -96,21 +94,9 @@ const Conditions = () => {
 
         <div className="mb-8 overflow-x-auto">
           <div className="flex space-x-2 min-w-max px-0 mx-0 my-[4px]">
-            {conditions.map(condition => (
-              <button 
-                key={condition.id} 
-                id={condition.id} 
-                className={cn(
-                  "px-4 py-2 text-sm md:text-base rounded-full transition-all whitespace-nowrap", 
-                  activeTab === condition.id 
-                    ? "bg-resonance-600 text-white shadow-sm" 
-                    : "bg-white text-gray-700 hover:bg-resonance-100"
-                )} 
-                onClick={() => setActiveTab(condition.id)}
-              >
+            {conditions.map(condition => <button key={condition.id} id={condition.id} className={cn("px-4 py-2 text-sm md:text-base rounded-full transition-all whitespace-nowrap", activeTab === condition.id ? "bg-resonance-600 text-white shadow-sm" : "bg-white text-gray-700 hover:bg-resonance-100")} onClick={() => setActiveTab(condition.id)}>
                 {condition.title}
-              </button>
-            ))}
+              </button>)}
           </div>
         </div>
 
@@ -184,5 +170,4 @@ const Conditions = () => {
       </div>
     </section>;
 };
-
 export default Conditions;
