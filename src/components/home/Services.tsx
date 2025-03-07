@@ -67,34 +67,39 @@ const Services = () => {
         </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {services.map((service, index) => (
-            <AnimatedSection 
-              key={service.id} 
-              delay={index * 100}
-              className={cn(
-                "rounded-xl p-6 border transition-all duration-300 cursor-pointer hover:shadow-md",
-                activeService === service.id 
-                  ? "border-resonance-300 bg-resonance-50/50 shadow-sm" 
-                  : "border-gray-200 bg-white hover:border-resonance-200"
-              )}
-              onClick={() => setActiveService(service.id)}
-            >
-              <div className="flex items-start">
-                <div className={cn(
-                  "w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0",
+          {services.map((service, index) => {
+            // Create separate element to handle click event
+            return (
+              <AnimatedSection 
+                key={service.id} 
+                delay={index * 100}
+                className={cn(
+                  "rounded-xl p-6 border transition-all duration-300 cursor-pointer hover:shadow-md",
                   activeService === service.id 
-                    ? "bg-resonance-100 text-resonance-600" 
-                    : "bg-gray-100 text-gray-600"
-                )}>
-                  <service.icon size={24} />
+                    ? "border-resonance-300 bg-resonance-50/50 shadow-sm" 
+                    : "border-gray-200 bg-white hover:border-resonance-200"
+                )}
+              >
+                <div 
+                  className="flex items-start"
+                  onClick={() => setActiveService(service.id)}
+                >
+                  <div className={cn(
+                    "w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0",
+                    activeService === service.id 
+                      ? "bg-resonance-100 text-resonance-600" 
+                      : "bg-gray-100 text-gray-600"
+                  )}>
+                    <service.icon size={24} />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.title}</h3>
+                    <p className="text-gray-600 text-sm">{service.description}</p>
+                  </div>
                 </div>
-                <div className="ml-4">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.title}</h3>
-                  <p className="text-gray-600 text-sm">{service.description}</p>
-                </div>
-              </div>
-            </AnimatedSection>
-          ))}
+              </AnimatedSection>
+            );
+          })}
         </div>
 
         <AnimatedSection>
