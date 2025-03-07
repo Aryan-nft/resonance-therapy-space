@@ -77,8 +77,8 @@ const Navbar = () => {
         'translate-x-0': isOpen,
         'translate-x-full': !isOpen
       })}>
-          <div className="container mx-auto px-4 py-4 flex flex-col space-y-4 rounded-none bg-[#d5f1f6] my-0">
-            {navLinks.map(link => <a key={link.name} href={link.path} className="text-base font-medium text-gray-700 hover:text-resonance-600 transition-colors py-2 border-b border-gray-100" onClick={() => setIsOpen(false)}>
+          <div className="container mx-auto px-4 py-4 flex flex-col space-y-4 rounded-none my-0 bg-gray-50">
+            {navLinks.map(link => <a key={link.name} href={link.path} onClick={() => setIsOpen(false)} className="text-base font-medium text-gray-700 hover:text-resonance-600 transition-colors py-2 border-b border-black-700">
                 {link.name}
               </a>)}
             <a href="#contact" className="mt-4 inline-flex justify-center px-4 py-2 rounded-full bg-resonance-600 text-white hover:bg-resonance-700 transition-colors text-sm font-medium" onClick={() => setIsOpen(false)}>
