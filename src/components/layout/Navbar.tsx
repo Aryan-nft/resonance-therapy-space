@@ -1,10 +1,13 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -14,14 +17,21 @@ const Navbar = () => {
         setScrolled(false);
       }
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   const navLinks = [{
     name: 'Home',
     path: '/'
@@ -44,6 +54,7 @@ const Navbar = () => {
     name: 'Stammering',
     path: '#stammering'
   }];
+
   return <header className={cn('fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out py-4', {
     'bg-white/90 backdrop-blur-md shadow-sm': scrolled,
     'bg-transparent': !scrolled
@@ -77,6 +88,15 @@ const Navbar = () => {
         'translate-x-0': isOpen,
         'translate-x-full': !isOpen
       })}>
+          {/* Close button in the top-right corner */}
+          <button 
+            className="absolute top-6 right-6 p-2 text-gray-700 hover:text-resonance-600"
+            onClick={closeMenu}
+            aria-label="Close Menu"
+          >
+            <X size={24} />
+          </button>
+          
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-4 rounded-none my-0 bg-gray-50">
             {navLinks.map(link => <a key={link.name} href={link.path} onClick={() => setIsOpen(false)} className="text-base font-medium text-gray-700 hover:text-resonance-600 transition-colors py-2 border-b border-black-700">
                 {link.name}
@@ -89,4 +109,5 @@ const Navbar = () => {
       </div>
     </header>;
 };
+
 export default Navbar;

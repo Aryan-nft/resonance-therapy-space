@@ -15,12 +15,22 @@ const Index = () => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         
-        const target = document.querySelector(this.getAttribute('href') || '');
+        const href = this.getAttribute('href') || '';
+        const targetId = href.replace('#', '');
+        
+        // Handle scrolling to sections with specific condition IDs
+        const target = document.querySelector(href) || 
+                       document.getElementById(targetId) || 
+                       document.querySelector(`[id="${targetId}"]`);
+        
         if (target) {
-          window.scrollTo({
-            top: (target as HTMLElement).offsetTop - 80,
-            behavior: 'smooth'
-          });
+          // Set a small delay for condition tabs to ensure the section is properly rendered
+          setTimeout(() => {
+            window.scrollTo({
+              top: (target as HTMLElement).offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }, 100);
         }
       });
     });
