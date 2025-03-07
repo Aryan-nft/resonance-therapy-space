@@ -31,7 +31,7 @@ const Services = () => {
       id: 'family',
       title: 'Family Support',
       icon: Users,
-      description: 'Guidance and resources for families to better understand and support their loved ones' therapeutic journey.',
+      description: "Guidance and resources for families to better understand and support their loved ones' therapeutic journey.",
       benefits: ['Parental coaching', 'Home strategies', 'Emotional support']
     },
     {
