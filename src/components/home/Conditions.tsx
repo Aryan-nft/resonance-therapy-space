@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AnimatedSection from '../ui/AnimatedSection';
 import { cn } from '@/lib/utils';
 
@@ -52,7 +52,36 @@ const Conditions = () => {
   const [activeSection, setActiveSection] = useState('description');
   const activeCondition = conditions.find(condition => condition.id === activeTab);
 
-  return <section className="py-20 bg-resonance-50">
+  // Listen for custom event to activate specific condition tab
+  useEffect(() => {
+    const handleActivateCondition = (event: CustomEvent) => {
+      const { conditionId } = event.detail;
+      if (conditionId && conditions.some(condition => condition.id === conditionId)) {
+        setActiveTab(conditionId);
+        setActiveSection('description');
+      }
+    };
+
+    // Add event listener
+    document.addEventListener('activateCondition', handleActivateCondition as EventListener);
+
+    // Check if there's a hash in the URL for direct condition access
+    const hash = window.location.hash;
+    if (hash) {
+      const conditionId = hash.replace('#', '');
+      if (conditions.some(condition => condition.id === conditionId)) {
+        setActiveTab(conditionId);
+        setActiveSection('description');
+      }
+    }
+
+    // Clean up
+    return () => {
+      document.removeEventListener('activateCondition', handleActivateCondition as EventListener);
+    };
+  }, []);
+
+  return <section id="conditions" className="py-20 bg-resonance-50">
       <div className="section-container">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16">
           <span className="badge badge-secondary mb-4">Conditions We Treat</span>
@@ -86,7 +115,7 @@ const Conditions = () => {
         </div>
 
         <AnimatedSection key={activeTab} className="bg-white rounded-2xl p-6 md:p-8 shadow-soft border border-gray-100">
-          <div className="mb-8" id={activeTab}>
+          <div className="mb-8" id={`condition-${activeTab}`}>
             <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">{activeCondition?.title}</h3>
             <p className="text-gray-700">{activeCondition?.description}</p>
           </div>

@@ -11,36 +11,82 @@ import Contact from '@/components/home/Contact';
 const Index = () => {
   useEffect(() => {
     // Smooth scroll for anchor links
+    const handleAnchorClick = (e: Event) => {
+      e.preventDefault();
+      
+      const anchor = e.currentTarget as HTMLAnchorElement;
+      const href = anchor.getAttribute('href') || '';
+      
+      // Only process anchor links
+      if (!href.startsWith('#')) return;
+      
+      const targetId = href.replace('#', '');
+      
+      // Handle scrolling to sections with specific condition IDs
+      const target = document.getElementById(targetId);
+      
+      if (target) {
+        // Set a small delay for condition tabs to ensure the section is properly rendered
+        setTimeout(() => {
+          const navbarHeight = 80; // Approximate navbar height
+          const targetPosition = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
+          // If the target is a condition, activate its tab
+          if (targetId && ['autism', 'adhd', 'learning-disability', 'behavioral-issues', 'speech-delay', 'stammering'].includes(targetId)) {
+            const conditionEvent = new CustomEvent('activateCondition', { detail: { conditionId: targetId } });
+            document.dispatchEvent(conditionEvent);
+          }
+        }, 100);
+      }
+    };
+    
+    // Add event listeners to all anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        
-        const href = this.getAttribute('href') || '';
-        const targetId = href.replace('#', '');
-        
-        // Handle scrolling to sections with specific condition IDs
-        const target = document.querySelector(href) || 
-                       document.getElementById(targetId) || 
-                       document.querySelector(`[id="${targetId}"]`);
-        
-        if (target) {
-          // Set a small delay for condition tabs to ensure the section is properly rendered
-          setTimeout(() => {
-            window.scrollTo({
-              top: (target as HTMLElement).offsetTop - 80,
-              behavior: 'smooth'
-            });
-          }, 100);
-        }
-      });
+      anchor.addEventListener('click', handleAnchorClick);
     });
     
     // Initial page load animation
     document.body.classList.add('animate-fade-in');
     
+    // Cleanup event listeners
     return () => {
       document.body.classList.remove('animate-fade-in');
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.removeEventListener('click', handleAnchorClick);
+      });
     };
+  }, []);
+
+  // Check for hash in URL on initial load
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const targetId = hash.replace('#', '');
+      const target = document.getElementById(targetId);
+      
+      if (target) {
+        setTimeout(() => {
+          const navbarHeight = 80;
+          const targetPosition = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
+          // If the target is a condition, activate its tab
+          if (targetId && ['autism', 'adhd', 'learning-disability', 'behavioral-issues', 'speech-delay', 'stammering'].includes(targetId)) {
+            const conditionEvent = new CustomEvent('activateCondition', { detail: { conditionId: targetId } });
+            document.dispatchEvent(conditionEvent);
+          }
+        }, 300); // Longer delay for initial load
+      }
+    }
   }, []);
 
   return (
